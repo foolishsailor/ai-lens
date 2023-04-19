@@ -19,3 +19,13 @@ npm run start
 ### Project Details
 
 Coming Soon
+
+Will dispay
+
+- Tasks
+- Tasks per agent
+- Draggable agent windows
+- Connectivity diagram between agents
+  ...so...much...more
+
+![ai-lens](public/assets/ai-len_screenshot.png)
