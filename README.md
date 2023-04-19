@@ -28,4 +28,4 @@ Will dispay
 - Connectivity diagram between agents
   ...so...much...more
 
-![ai-lens](public/assets/ai-len_screenshot.png)
+![ai-lens](./public/assets/ai-len_screenshot.png)
