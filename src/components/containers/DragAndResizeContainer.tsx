@@ -1,9 +1,9 @@
 import { ReactNode, SyntheticEvent, useState } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
+
 import { ResizableBox, ResizeCallbackData } from 'react-resizable';
 
 import { Point, Size } from '../../types/draw';
-import { useTheme } from '@mui/material';
 
 interface Props {
   initialPosition: Point;
@@ -19,7 +19,6 @@ const DragAndResizeContainer = ({
   resizeHandler,
   children
 }: Props) => {
-  const theme = useTheme();
   const [position, setPosition] = useState(initialPosition);
   const [size, setSize] = useState(initialSize);
 
@@ -46,7 +45,7 @@ const DragAndResizeContainer = ({
     <Draggable
       bounds="parent"
       onDrag={handleDrag}
-      handle={`.${dragHandleClassName}`}
+      // handle={`.${dragHandleClassName}`}
     >
       <ResizableBox
         width={size.width}
@@ -56,10 +55,11 @@ const DragAndResizeContainer = ({
           position: 'absolute',
           top: initialPosition.y,
           left: initialPosition.x,
-          backgroundColor: theme.palette.grey[800],
+          backgroundColor: '#444',
           borderRadius: 1,
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          padding: 8
         }}
       >
         {children}
