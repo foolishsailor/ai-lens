@@ -22,6 +22,7 @@ export const AgentCardHeaderRight = styled(Grid)``;
 export const AgentCardHeaderLeft = styled(Grid)``;
 
 export const AgentCardContent = styled(Grid)(({ theme }) => ({
+  position: 'relative',
   flex: 1,
   height: '100%',
   padding: theme.spacing(1)
