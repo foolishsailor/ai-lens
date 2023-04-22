@@ -1,7 +1,10 @@
+import { Provider } from 'react-redux';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import './App.css';
 
 import AgentsControl from './pages/AgentsControl';
+
+import store from './store';
 
 const darkTheme = createTheme({
   palette: {
@@ -12,8 +15,10 @@ const darkTheme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <AgentsControl />
+      <Provider store={store}>
+        <CssBaseline />
+        <AgentsControl />
+      </Provider>
     </ThemeProvider>
   );
 }

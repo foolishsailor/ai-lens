@@ -32,15 +32,11 @@ export const agentSource = (id: string): AgentMessageSource => ({
   id
 });
 
-export const CODE_BLOCK_DELIMITER = '```';
 
 export const messageBuilder = addMessageTypes({
   spontaneous: singleTargetSystemMessage,
-
   ok: singleTargetSystemMessage,
-
   error: singleTargetSystemMessage,
-
   agentToAgent: (
     sourceAgentId: string,
     targetAgentIds: string[],

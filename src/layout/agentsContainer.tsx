@@ -1,26 +1,25 @@
-import { ReactNode } from 'react';
-import { Box, Grid, useTheme } from '@mui/material';
+import { ReactNode, useRef } from 'react';
+import { useTheme } from '@mui/material';
 
 export interface AgentsContainerProps {
   children?: ReactNode;
+  ref?: React.RefObject<HTMLDivElement>;
 }
 
-export const AgentsContainer = ({ children }: AgentsContainerProps) => {
+export const AgentsContainer = ({ children, ref }: AgentsContainerProps) => {
   const theme = useTheme();
   return (
-    <Grid
-      container
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(30%, 1fr))',
-        gap: 1,
+    <div
+      ref={ref}
+      style={{
         flex: 4,
-        p: 1,
-        justifyContent: 'center',
-        backgroundColor: theme.palette.grey[900]
+        padding: 8,
+
+        position: 'relative',
+        overflow: 'auto'
       }}
     >
       {children}
-    </Grid>
+    </div>
   );
 };

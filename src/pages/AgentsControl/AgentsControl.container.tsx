@@ -1,29 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import socket from '../../services/socket';
-import { useCreateReducer } from '../../hooks/useCreateReducer';
 
 import { Message } from '../../types/message';
 import AgentsControl from './AgentsControl';
-import AgentsControlContext from './AgentsControl.context';
-import { AgentsControlState, initialState } from './AgentsControl.state';
+
+import { useDispatch } from 'react-redux';
+
+import { addMessages, setActiveAgents } from '../../store/applicationSlice';
 
 const AgentsControlContainer = () => {
-  const contextValue = useCreateReducer<AgentsControlState>({
-    initialState
-  });
+  const dispatch = useDispatch();
 
-  const {
-    state: { messages },
-    dispatch
-  } = contextValue;
-
-  const handleNewMessage = (message: Message) => {
-    dispatch({ field: 'messages', value: [...messages, message] });
-
-    if (message.activeAgents) {
-      dispatch({ field: 'activeAgents', value: message.activeAgents });
-    }
-  };
+  const handleNewMessage = useCallback(
+    (message: Message) => {
+      dispatch(addMessages(message));
+      message.activeAgents && dispatch(setActiveAgents(message.activeAgents));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (socket.connected) {
@@ -32,13 +26,9 @@ const AgentsControlContainer = () => {
       socket.connect();
       socket.on('message', handleNewMessage);
     }
-  }, [messages]);
+  }, [handleNewMessage]);
 
-  return (
-    <AgentsControlContext.Provider value={contextValue}>
-      <AgentsControl />
-    </AgentsControlContext.Provider>
-  );
+  return <AgentsControl />;
 };
 
 export default AgentsControlContainer;

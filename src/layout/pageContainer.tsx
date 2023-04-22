@@ -6,7 +6,6 @@ export interface PageContainerProps {
 }
 
 export const PageContainer = ({ children }: PageContainerProps) => {
-  console.log('trigger page container');
   return (
     <Box
       sx={{

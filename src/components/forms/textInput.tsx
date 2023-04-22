@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
-import AgentsControlContext from '../pages/AgentsControl/AgentsControl.context';
-import socket from '../services/socket';
+import socket from '../../services/socket';
 
 const ControlInput = () => {
   const [inputText, setInputText] = useState('');
