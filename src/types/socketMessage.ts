@@ -1,7 +1,7 @@
 import {
   CommandActionToMessage,
   CommandActions
-} from '@/services/socket/commandActions';
+} from '@/services/socket/useCommandActions';
 
 interface SocketMessageState<T> {
   type: 'State';

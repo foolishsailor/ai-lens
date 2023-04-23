@@ -32,7 +32,6 @@ export const agentSource = (id: string): AgentMessageSource => ({
   id
 });
 
-
 export const messageBuilder = addMessageTypes({
   spontaneous: singleTargetSystemMessage,
   ok: singleTargetSystemMessage,
