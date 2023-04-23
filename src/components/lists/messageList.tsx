@@ -72,7 +72,7 @@ const MessageList = ({ messages }: Props) => {
           itemCount={messages.length}
           itemSize={50}
           style={{
-            backgroundColor: theme.palette.grey[800]
+            backgroundColor: theme.palette.grey[900]
           }}
         >
           {renderRow}

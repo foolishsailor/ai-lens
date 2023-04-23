@@ -1,4 +1,4 @@
-export interface Agent {
+export interface AgentContainer {
   id: string;
   name?: string;
   position?: { x: number; y: number };

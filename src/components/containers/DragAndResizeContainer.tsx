@@ -34,7 +34,6 @@ const DragAndResizeContainer = ({
     { size }: Partial<ResizeCallbackData>
   ) => {
     if (size) {
-      console.log('size', size);
       setSize({ width: size.width, height: size.height });
       if (resizeHandler) resizeHandler(size);
     }

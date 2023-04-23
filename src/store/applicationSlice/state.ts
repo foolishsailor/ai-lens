@@ -1,10 +1,10 @@
 import { Message } from '../../types/message';
-import { Agent } from '../../types/agent';
+import { AgentContainer } from '../../types/agent';
 
 export interface ApplicationState {
   activeAgents: string[];
   messages: Message[];
-  agents: Agent[];
+  agents: AgentContainer[];
 }
 
 export const initialState: ApplicationState = {

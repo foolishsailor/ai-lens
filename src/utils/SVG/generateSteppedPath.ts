@@ -1,4 +1,4 @@
-import { Agent } from '../../types/agent';
+import { AgentContainer } from '../../types/agent';
 import { Point } from '../../types/draw';
 
 import { createSVGElement } from './createSVGelement';
@@ -61,8 +61,8 @@ export const addGlowToLine = (svgElement: SVGSVGElement) => {
 };
 
 export const drawSteppedSVGLine = (
-  startAgent: Agent,
-  endAgent: Agent,
+  startAgent: AgentContainer,
+  endAgent: AgentContainer,
   steps: number,
   svgElement: SVGSVGElement
 ): void => {

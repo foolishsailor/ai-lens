@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Message } from '../types/message';
 import { createConnectionList } from '../utils/createConnectionList';
-import { Agent } from '../types/agent';
+import { AgentContainer } from '../types/agent';
 
 import { Connection } from '../types/draw';
 import {
@@ -11,7 +11,7 @@ import {
 
 type CommsLinesProps = {
   message: Message;
-  agents: Agent[];
+  agents: AgentContainer[];
 };
 
 const CommsLines = ({ message, agents }: CommsLinesProps) => {

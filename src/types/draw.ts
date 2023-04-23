@@ -1,4 +1,4 @@
-import { Agent } from './agent';
+import { AgentContainer } from './agent';
 
 export type Point = {
   x: number;
@@ -14,7 +14,7 @@ export type Line = {
 };
 
 export type Connection = {
-  startAgent: Agent;
-  endAgent: Agent;
+  startAgent: AgentContainer;
+  endAgent: AgentContainer;
   steps: number;
 };

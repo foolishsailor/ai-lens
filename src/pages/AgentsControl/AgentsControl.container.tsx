@@ -1,12 +1,12 @@
 import { useEffect, useCallback } from 'react';
-import socket from '../../services/socket';
+import socket from '@/services/socket/socket';
 
-import { Message } from '../../types/message';
+import { Message } from '@/types/message';
 import AgentsControl from './AgentsControl';
 
 import { useDispatch } from 'react-redux';
 
-import { addMessages, setActiveAgents } from '../../store/applicationSlice';
+import { addMessages, setActiveAgents } from '@/store/applicationSlice';
 
 const AgentsControlContainer = () => {
   const dispatch = useDispatch();
