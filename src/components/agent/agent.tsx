@@ -1,4 +1,4 @@
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, useTheme } from '@mui/material';
 import CommsIndicator from '@/components/commsIndicator';
 
 import { memo, useEffect, useRef, useState } from 'react';
@@ -28,18 +28,19 @@ interface AgentProps {
 }
 
 const Agent = ({ agentId, initialPosition, initialSize }: AgentProps) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { messages } = useSelector(
     (state: RootState) => ({
-      messages: state.application.messages.slice(-100)
+      messages: state.application.messages
     }),
     shallowEqual
   );
 
   const [commsLineColor] = useState(generateRandomColor());
-  const filteredMessages = messages
-    .filter((message) => message.targetAgentIds.includes(agentId))
-    .slice(-20);
+  const filteredMessages = messages.filter((message) =>
+    message.targetAgentIds.includes(agentId)
+  );
 
   useEffect(() => {
     dispatch(
@@ -86,22 +87,16 @@ const Agent = ({ agentId, initialPosition, initialSize }: AgentProps) => {
       <AgentCard>
         <AgentCardHeader>
           <AgentCardHeaderLeft>
-            <CommsIndicator
-              message={
-                filteredMessages?.length > 0
-                  ? filteredMessages[filteredMessages.length - 1]
-                  : null
-              }
-            />
+            <CommsIndicator message={filteredMessages[0]} />
           </AgentCardHeaderLeft>
           <AgentCardHeaderTitle>
             <Typography
+              variant="overline"
+              display="block"
               sx={{
                 flex: 1,
-                fontSize: 16,
-                color: '#fff',
-                fontWeight: 'bold',
-                p: 1,
+                m: 0,
+                p: 0,
                 cursor: 'move'
               }}
             >

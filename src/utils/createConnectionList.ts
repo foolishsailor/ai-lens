@@ -17,7 +17,7 @@ export const createConnectionList = (
     message.targetAgentIds.forEach((targetAgentId) => {
       const targetAgent = agents.find((agent) => agent.id === targetAgentId);
 
-      if (targetAgent?.position)
+      if (targetAgent?.position && targetAgent.id !== sourceAgent.id)
         positionsArray.push({
           startAgent: sourceAgent,
           endAgent: targetAgent,

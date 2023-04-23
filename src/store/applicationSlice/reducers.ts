@@ -29,7 +29,7 @@ export const reducers = {
   },
 
   addMessages(state: ApplicationState, action: PayloadAction<Message>) {
-    state.messages = [...state.messages, action.payload];
+    state.messages = [action.payload, ...state.messages];
   }
 
   // addMessages(state: ApplicationState, action: PayloadAction<Message>) {

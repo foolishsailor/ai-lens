@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import ControlInput from '../../components/forms/textInput';
 import { ControlContainer } from '../../layout/controlContainer';
@@ -8,13 +8,20 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { RootState } from '../../store';
 import CommsLines from '../../components/commsLines';
 import MessageList from '../../components/lists/messageList';
+import { AgentsContainer } from '@/layout/agentsContainer';
+import {
+  AgentCardHeader,
+  AgentCardHeaderLeft,
+  AgentCardHeaderTitle
+} from '@/components/cards/agentCard';
+import CommsIndicator from '@/components/commsIndicator';
 
 const AgentsControl = () => {
   const { agents, activeAgents, messages } = useSelector(
     (state: RootState) => ({
       agents: state.application.agents,
       activeAgents: state.application.activeAgents,
-      messages: state.application.messages.slice(-20)
+      messages: state.application.messages
     }),
     shallowEqual
   );
@@ -26,10 +33,7 @@ const AgentsControl = () => {
   }>();
 
   const gap = 100;
-
-  const filteredMessages = messages
-    .filter((message) => message.targetAgentIds.includes('0'))
-    .slice(-20);
+  const padding = 40;
 
   useEffect(() => {
     if (parentRef.current) {
@@ -42,11 +46,26 @@ const AgentsControl = () => {
   return (
     <PageContainer>
       <ControlContainer>
+        <AgentCardHeader>
+          <AgentCardHeaderLeft>
+            <CommsIndicator message={messages[0]} />
+          </AgentCardHeaderLeft>
+          <AgentCardHeaderTitle>
+            <Typography
+              variant="overline"
+              display="block"
+              sx={{
+                flex: 1,
+                m: 0,
+                p: 0
+              }}
+            >
+              Message Stream
+            </Typography>
+          </AgentCardHeaderTitle>
+        </AgentCardHeader>
         <Grid item container sx={{ flex: 8 }}>
-          <MessageList
-            messages={filteredMessages}
-            height={'calc(100vh - 225px)'}
-          />
+          <MessageList messages={messages} />
         </Grid>
 
         <Grid
@@ -60,25 +79,19 @@ const AgentsControl = () => {
           <ControlInput />
         </Grid>
       </ControlContainer>
-      <div
-        ref={parentRef}
-        style={{
-          flex: 4,
-          position: 'relative',
-          overflow: 'auto'
-        }}
-      >
+      <AgentsContainer parentRef={parentRef}>
         {messages?.length > 0 && (
-          <CommsLines message={messages[messages.length - 1]} agents={agents} />
+          <CommsLines message={messages[0]} agents={agents} />
         )}
         {parentSize && (
           <AgentsPlacement
             agents={activeAgents}
             parentSize={parentSize}
             gap={gap}
+            padding={padding}
           />
         )}
-      </div>
+      </AgentsContainer>
     </PageContainer>
   );
 };

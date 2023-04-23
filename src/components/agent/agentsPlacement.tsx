@@ -1,26 +1,28 @@
-import { memo } from 'react';
 import Agent from './agent';
 
 type Props = {
   agents: string[];
   parentSize: { width: number; height: number };
   gap: number;
+  padding: number;
 };
 
-const AgentsPlacement = ({ agents, parentSize, gap }: Props) => {
+const AgentsPlacement = ({ agents, parentSize, gap, padding }: Props) => {
   const numItems = agents.length;
-  const ratio = parentSize.width / parentSize.height;
+  const ratio = parentSize.height / parentSize.width;
   const numCols = Math.ceil(Math.sqrt(numItems / ratio));
   const numRows = Math.ceil(numItems / numCols);
-  const divWidth = (parentSize.width - gap * (numCols + 1)) / numCols;
-  const divHeight = (parentSize.height - gap * (numRows + 1)) / numRows;
+  const divWidth =
+    (parentSize.width - gap * (numCols - 1) - padding * 2) / numCols;
+  const divHeight =
+    (parentSize.height - gap * (numRows - 1) - padding * 2) / numRows;
 
   const newAgentsState = agents.map((agent, index) => {
     const row = Math.floor(index / numCols);
     const col = index % numCols;
     const initialPosition = {
-      y: row * (divHeight + gap) + gap,
-      x: col * (divWidth + gap) + gap
+      y: row * (divHeight + gap) + padding,
+      x: col * (divWidth + gap) + padding
     };
 
     const size = { width: divWidth, height: divHeight };

@@ -3,8 +3,11 @@ import { Message } from '../types/message';
 import { createConnectionList } from '../utils/createConnectionList';
 import { Agent } from '../types/agent';
 
-import { Connection, Line } from '../types/draw';
-import { drawSteppedSVGLine } from '../utils/SVG/generateSteppedPath';
+import { Connection } from '../types/draw';
+import {
+  addGlowToLine,
+  drawSteppedSVGLine
+} from '../utils/SVG/generateSteppedPath';
 
 type CommsLinesProps = {
   message: Message;
@@ -33,6 +36,8 @@ const CommsLines = ({ message, agents }: CommsLinesProps) => {
           svgRef.current
         );
     });
+
+    addGlowToLine(svgRef.current);
   }, [agents, message]);
 
   useEffect(() => {

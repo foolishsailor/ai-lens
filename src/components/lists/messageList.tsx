@@ -1,8 +1,14 @@
-import { List, ListItem, ListItemText, Grid, Typography } from '@mui/material';
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Grid,
+  Typography,
+  useTheme
+} from '@mui/material';
 import ReactMarkdown from 'react-markdown';
-import { createTitle } from '../../utils/messages/createTitle';
-import { Message } from '../../types/message';
-import { useRef, useEffect } from 'react';
+import { createTitle } from '@/utils/messages/createTitle';
+import { Message } from '@/types/message';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 
@@ -11,13 +17,7 @@ interface Props {
 }
 
 const MessageList = ({ messages }: Props) => {
-  const lastItemRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (lastItemRef.current) {
-      lastItemRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
+  const theme = useTheme();
 
   function renderRow(props: ListChildComponentProps) {
     const { index, style } = props;
@@ -28,9 +28,10 @@ const MessageList = ({ messages }: Props) => {
         alignItems="flex-start"
         sx={{
           backgroundColor:
-            messages[index].type === 'error' ? '#300105' : '#222',
-          borderRadius: 1,
-          marginBottom: 1,
+            messages[index].type === 'error'
+              ? '#300105'
+              : theme.palette.grey[900],
+          borderBottom: `solid 1px ${theme.palette.grey[800]}`,
           p: 1,
           boxShadow: 1
         }}
@@ -71,7 +72,7 @@ const MessageList = ({ messages }: Props) => {
           itemCount={messages.length}
           itemSize={50}
           style={{
-            backgroundColor: '#1a1a1a'
+            backgroundColor: theme.palette.grey[800]
           }}
         >
           {renderRow}

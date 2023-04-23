@@ -30,52 +30,58 @@ export const generateSteppedPath = (
   return path;
 };
 
+export const addGlowToLine = (svgElement: SVGSVGElement) => {
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
+  const filter = createSVGElement('filter', {
+    id: 'glow'
+  });
+
+  const feGaussianBlur = createSVGElement('fegaussianblur', {
+    class: 'blur',
+    result: 'coloredBlur',
+    stddeviation: '5'
+  });
+
+  const feMerge = createSVGElement('femerge', {});
+  const feMergeNode = createSVGElement('femergenode', { in: 'coloredBlur' });
+  const feMergeNode1 = createSVGElement('femergenode', { id: 'SourceGraphic' });
+
+  feMerge.appendChild(feMergeNode);
+  feMerge.appendChild(feMergeNode);
+  feMerge.appendChild(feMergeNode);
+  feMerge.appendChild(feMergeNode1);
+
+  filter.appendChild(feGaussianBlur);
+  filter.appendChild(feMerge);
+
+  defs.appendChild(filter);
+
+  svgElement.appendChild(defs);
+};
+
 export const drawSteppedSVGLine = (
   startAgent: Agent,
   endAgent: Agent,
   steps: number,
-  svgElement: SVGSVGElement,
-  arrowSize?: number
+  svgElement: SVGSVGElement
 ): void => {
   const { startPoint, endPoint } = calculateStartAndEndPoints(
     startAgent,
-    endAgent
+    endAgent,
+    10
   );
 
-  const pathData = generateSteppedPath(startPoint, endPoint, steps);
+  if (!startAgent.commsLineColor) return;
 
+  const pathData = generateSteppedPath(startPoint, endPoint, steps);
   const path = createSVGElement('path', {
     d: pathData,
     stroke: startAgent.commsLineColor,
-    'stroke-width': '3',
-    fill: 'none',
-    'marker-end': 'url(#arrow)',
-    filter: 'url(#glow)'
+    'stroke-width': '4',
+    fill: 'none'
+    // filter: 'url(#glow)'
   });
-
-  if (arrowSize) {
-    const marker = createSVGElement('marker', {
-      id: 'arrow',
-      refX: `${arrowSize}`,
-      refY: `${arrowSize / 2}`,
-      markerWidth: `${arrowSize}`,
-      markerHeight: `${arrowSize}`,
-      viewBox: `0 0 ${arrowSize} ${arrowSize}`,
-      orient: 'auto'
-    });
-
-    const arrowPath = createSVGElement('path', {
-      d: `M0,0 L0,${arrowSize} L${arrowSize},${arrowSize / 2} Z`,
-      fill: startAgent.commsLineColor
-    });
-
-    marker.appendChild(arrowPath);
-
-    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-    defs.appendChild(marker);
-
-    svgElement.appendChild(defs);
-  }
 
   svgElement.appendChild(path);
 };

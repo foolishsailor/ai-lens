@@ -7,8 +7,17 @@ import { Point } from '../../types/draw';
 */
 export const calculateStartAndEndPoints = (
   startAgent: Agent,
-  endAgent: Agent
+  endAgent: Agent,
+  offset: number
 ): { startPoint: Point; endPoint: Point } => {
+  if (
+    !startAgent.position ||
+    !endAgent.position ||
+    !startAgent.size ||
+    !endAgent.size
+  )
+    return { startPoint: { x: 0, y: 0 }, endPoint: { x: 0, y: 0 } };
+
   const startCenter: Point = {
     x: startAgent.position.x + startAgent.size.width / 2,
     y: startAgent.position.y + startAgent.size.height / 2
@@ -22,26 +31,27 @@ export const calculateStartAndEndPoints = (
     agent: Agent,
     side: 'left' | 'right' | 'top' | 'bottom'
   ): Point => {
+    if (!agent.position || !agent.size) return { x: 0, y: 0 };
     switch (side) {
       case 'left':
         return {
-          x: agent.position.x,
+          x: agent.position.x - offset,
           y: agent.position.y + agent.size.height / 2
         };
       case 'right':
         return {
-          x: agent.position.x + agent.size.width,
+          x: agent.position.x + agent.size.width + offset,
           y: agent.position.y + agent.size.height / 2
         };
       case 'top':
         return {
           x: agent.position.x + agent.size.width / 2,
-          y: agent.position.y
+          y: agent.position.y - offset
         };
       case 'bottom':
         return {
           x: agent.position.x + agent.size.width / 2,
-          y: agent.position.y + agent.size.height
+          y: agent.position.y + agent.size.height + offset
         };
     }
   };

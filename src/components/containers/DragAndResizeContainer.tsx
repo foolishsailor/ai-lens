@@ -42,11 +42,7 @@ const DragAndResizeContainer = ({
   };
 
   return (
-    <Draggable
-      bounds="parent"
-      onDrag={handleDrag}
-      // handle={`.${dragHandleClassName}`}
-    >
+    <Draggable bounds="parent" onDrag={handleDrag}>
       <ResizableBox
         width={size.width}
         height={size.height}
@@ -55,7 +51,6 @@ const DragAndResizeContainer = ({
           position: 'absolute',
           top: initialPosition.y,
           left: initialPosition.x,
-          backgroundColor: '#444',
           borderRadius: 1,
           display: 'flex',
           flexDirection: 'column',
