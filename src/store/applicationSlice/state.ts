@@ -5,10 +5,12 @@ export interface ApplicationState {
   activeAgents: string[];
   messages: Message[];
   agents: AgentContainer[];
+  isConnected: boolean;
 }
 
 export const initialState: ApplicationState = {
   activeAgents: [],
   messages: [],
-  agents: []
+  agents: [],
+  isConnected: false
 };

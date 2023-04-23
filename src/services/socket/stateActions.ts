@@ -34,7 +34,7 @@
 */
 
 import { useState } from 'react';
-import socket from './socket';
+import { useSocket } from '@/services/socket/socket';
 
 export type Stores = 'application' | 'agents';
 
@@ -72,6 +72,7 @@ export type StateActionToMessage = {
 };
 
 export const useExecuteStateAction = () => {
+  const socket = useSocket();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<Record<string, unknown> | null>(null);
@@ -93,8 +94,8 @@ export const useExecuteStateAction = () => {
       if (type === 'State' && content.action === action.action) {
         setLoading(false);
 
-        const result = (content as StateActionToMessage[T['action']]['content'])
-          .result;
+        const { result } =
+          content as StateActionToMessage[T['action']]['content'];
 
         setData(result);
       }

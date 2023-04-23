@@ -15,7 +15,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "node"],
     "paths": {
       "@/*": ["./src/*"]
     }

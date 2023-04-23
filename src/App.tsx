@@ -5,6 +5,7 @@ import './App.css';
 import AgentsControl from './pages/AgentsControl';
 
 import store from './store';
+import SocketProvider from './services/socket/socket';
 
 const darkTheme = createTheme({
   palette: {
@@ -16,8 +17,10 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <Provider store={store}>
-        <CssBaseline />
-        <AgentsControl />
+        <SocketProvider>
+          <CssBaseline />
+          <AgentsControl />
+        </SocketProvider>
       </Provider>
     </ThemeProvider>
   );

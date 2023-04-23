@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
-import socket from '../../services/socket/socket';
+import { useSocket } from '@/services/socket/socket';
 
 const ControlInput = () => {
+  const socket = useSocket();
   const [inputText, setInputText] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

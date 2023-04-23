@@ -9,9 +9,10 @@ export const PageContainer = ({ children }: PageContainerProps) => {
   return (
     <Box
       sx={{
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '100vh',
+        flexWrap: 'nowrap',
         width: '100%',
         justifyContent: 'center'
       }}
@@ -22,7 +23,9 @@ export const PageContainer = ({ children }: PageContainerProps) => {
         sx={{
           display: 'flex',
           flexGrow: 1,
-          justifyContent: 'center'
+          justifyContent: 'center',
+          flexDirection: 'column',
+          flexWrap: 'nowrap'
         }}
       >
         {children}

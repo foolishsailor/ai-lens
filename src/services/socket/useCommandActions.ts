@@ -42,7 +42,7 @@
 */
 
 import { useState } from 'react';
-import socket from './socket';
+import { useSocket } from '@/services/socket/socket';
 
 export enum CommandActions {
   Start = 'start',
@@ -89,6 +89,7 @@ function isValidCommandAction(action: string): action is CommandActions {
 }
 
 export const useExecuteCommand = <T extends CommandActions>() => {
+  const socket = useSocket();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState<any>(null);

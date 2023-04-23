@@ -15,6 +15,8 @@ import {
   AgentCardHeaderTitle
 } from '@/components/cards/agentCard';
 import CommsIndicator from '@/components/commsIndicator';
+import { ButtonBarContainer } from '@/layout/buttonBarContainer';
+import CommandBar from '@/components/commandBar';
 
 const AgentsControl = () => {
   const { agents, activeAgents, messages } = useSelector(
@@ -45,53 +47,58 @@ const AgentsControl = () => {
 
   return (
     <PageContainer>
-      <ControlContainer>
-        <AgentCardHeader>
-          <AgentCardHeaderLeft>
-            <CommsIndicator message={messages[0]} />
-          </AgentCardHeaderLeft>
-          <AgentCardHeaderTitle>
-            <Typography
-              variant="overline"
-              display="block"
-              sx={{
-                flex: 1,
-                m: 0,
-                p: 0
-              }}
-            >
-              Message Stream
-            </Typography>
-          </AgentCardHeaderTitle>
-        </AgentCardHeader>
-        <Grid item container sx={{ flex: 8 }}>
-          <MessageList messages={messages} />
-        </Grid>
+      <Grid item container sx={{ flex: 1 }}>
+        <ControlContainer>
+          <AgentCardHeader>
+            <AgentCardHeaderLeft>
+              <CommsIndicator message={messages[0]} />
+            </AgentCardHeaderLeft>
+            <AgentCardHeaderTitle>
+              <Typography
+                variant="overline"
+                display="block"
+                sx={{
+                  flex: 1,
+                  m: 0,
+                  p: 0
+                }}
+              >
+                Message Stream
+              </Typography>
+            </AgentCardHeaderTitle>
+          </AgentCardHeader>
+          <Grid item container sx={{ flex: 8 }}>
+            <MessageList messages={messages} />
+          </Grid>
 
-        <Grid
-          item
-          container
-          sx={{
-            flex: 1,
-            minHeight: 225
-          }}
-        >
-          <ControlInput />
-        </Grid>
-      </ControlContainer>
-      <AgentsContainer parentRef={parentRef}>
-        {messages?.length > 0 && (
-          <CommsLines message={messages[0]} agents={agents} />
-        )}
-        {parentSize && (
-          <AgentsPlacement
-            agents={activeAgents}
-            parentSize={parentSize}
-            gap={gap}
-            padding={padding}
-          />
-        )}
-      </AgentsContainer>
+          <Grid
+            item
+            container
+            sx={{
+              flex: 1,
+              minHeight: 225
+            }}
+          >
+            <ControlInput />
+          </Grid>
+        </ControlContainer>
+        <AgentsContainer parentRef={parentRef}>
+          {messages?.length > 0 && (
+            <CommsLines message={messages[0]} agents={agents} />
+          )}
+          {parentSize && (
+            <AgentsPlacement
+              agents={activeAgents}
+              parentSize={parentSize}
+              gap={gap}
+              padding={padding}
+            />
+          )}
+        </AgentsContainer>
+      </Grid>
+      <ButtonBarContainer>
+        <CommandBar />
+      </ButtonBarContainer>
     </PageContainer>
   );
 };

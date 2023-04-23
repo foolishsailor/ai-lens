@@ -5,6 +5,9 @@ import { AgentContainer } from '../../types/agent';
 import { Message } from '../../types/message';
 
 export const reducers = {
+  setIsConnected(state: ApplicationState, action: PayloadAction<boolean>) {
+    state.isConnected = action.payload;
+  },
   setActiveAgents(state: ApplicationState, action: PayloadAction<string[]>) {
     state.activeAgents = action.payload;
   },

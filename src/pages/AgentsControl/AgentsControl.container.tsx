@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import socket from '@/services/socket/socket';
+import { useSocket } from '@/services/socket/socket';
 
 import { Message } from '@/types/message';
 import AgentsControl from './AgentsControl';
@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { addMessages, setActiveAgents } from '@/store/applicationSlice';
 
 const AgentsControlContainer = () => {
+  const socket = useSocket();
   const dispatch = useDispatch();
 
   const handleNewMessage = useCallback(
