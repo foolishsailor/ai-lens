@@ -2,7 +2,7 @@ import { ReactNode, SyntheticEvent, useState } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 
 import { ResizableBox, ResizeCallbackData } from 'react-resizable';
-
+import 'react-resizable/css/styles.css';
 import { Point, Size } from '../../types/draw';
 
 interface Props {
@@ -22,8 +22,6 @@ const DragAndResizeContainer = ({
   const [position, setPosition] = useState(initialPosition);
   const [size, setSize] = useState(initialSize);
 
-  const dragHandleClassName = 'drag-handle';
-
   const handleDrag: DraggableEventHandler = (event, data) => {
     const { x, y } = data;
     const newPosition = { x: x + initialPosition.x, y: y + initialPosition.y };
@@ -36,13 +34,18 @@ const DragAndResizeContainer = ({
     { size }: Partial<ResizeCallbackData>
   ) => {
     if (size) {
+      console.log('size', size);
       setSize({ width: size.width, height: size.height });
       if (resizeHandler) resizeHandler(size);
     }
   };
 
   return (
-    <Draggable bounds="parent" onDrag={handleDrag}>
+    <Draggable
+      cancel=".react-resizable-handle"
+      bounds="parent"
+      onDrag={handleDrag}
+    >
       <ResizableBox
         width={size.width}
         height={size.height}
