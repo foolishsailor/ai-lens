@@ -15,7 +15,7 @@ import {
   AgentCardHeaderTitle
 } from '@/components/cards/agentCard';
 import CommsIndicator from '@/components/commsIndicator';
-import { ButtonBarContainer } from '@/layout/buttonBarContainer';
+import ButtonBarContainer from '@/layout/buttonBarContainer';
 import CommandBar from '@/components/commandBar';
 
 const AgentsControl = () => {

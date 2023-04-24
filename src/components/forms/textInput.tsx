@@ -12,7 +12,8 @@ const ControlInput = () => {
 
   const handleClick = () => {
     if (inputText.trim()) {
-      if (socket) socket.emit('message', inputText);
+      if (socket)
+        socket.emit('message', { type: 'message', content: inputText });
       setInputText('');
     }
   };

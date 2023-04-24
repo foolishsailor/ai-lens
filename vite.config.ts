@@ -16,5 +16,12 @@ export default defineConfig({
       include: ['./src/**/*.js', './src/**/*.jsx'],
       exclude: []
     })
-  ]
+  ],
+  server: {
+    port: 3344,
+    hmr: {
+      host: 'localhost',
+      protocol: 'ws'
+    }
+  }
 });

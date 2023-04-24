@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Message } from '../types/message';
 import IndicatorLight from './indicatorLight';
 
@@ -29,4 +29,4 @@ const CommsIndicator = ({ message }: CircleProps) => {
   );
 };
 
-export default CommsIndicator;
+export default memo(CommsIndicator);
