@@ -17,13 +17,15 @@ import {
 import CommsIndicator from '@/components/commsIndicator';
 import { ButtonBarContainer } from '@/layout/buttonBarContainer';
 import CommandBar from '@/components/commandBar';
+import ConnectionStatus from '@/components/noConnectionOrAgents';
 
 const AgentsControl = () => {
-  const { agents, activeAgents, messages } = useSelector(
+  const { agents, activeAgents, messages, isConnected } = useSelector(
     (state: RootState) => ({
       agents: state.application.agents,
       activeAgents: state.application.activeAgents,
-      messages: state.application.messages
+      messages: state.application.messages,
+      isConnected: state.application.isConnected
     }),
     shallowEqual
   );
@@ -82,19 +84,25 @@ const AgentsControl = () => {
             <ControlInput />
           </Grid>
         </ControlContainer>
-        <AgentsContainer parentRef={parentRef}>
-          {messages?.length > 0 && (
-            <CommsLines message={messages[0]} agents={agents} />
-          )}
-          {parentSize && (
-            <AgentsPlacement
-              agents={activeAgents}
-              parentSize={parentSize}
-              gap={gap}
-              padding={padding}
-            />
-          )}
-        </AgentsContainer>
+        {!isConnected || activeAgents.length === 0 ? (
+          <AgentsContainer parentRef={parentRef}>
+            <ConnectionStatus />
+          </AgentsContainer>
+        ) : (
+          <AgentsContainer parentRef={parentRef}>
+            {messages?.length > 0 && (
+              <CommsLines message={messages[0]} agents={agents} />
+            )}
+            {parentSize && (
+              <AgentsPlacement
+                agents={activeAgents}
+                parentSize={parentSize}
+                gap={gap}
+                padding={padding}
+              />
+            )}
+          </AgentsContainer>
+        )}
       </Grid>
       <ButtonBarContainer>
         <CommandBar />

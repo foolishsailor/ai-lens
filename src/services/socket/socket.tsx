@@ -17,7 +17,9 @@ interface Props {
 const SocketProvider = ({ children, url = 'http://localhost:4331' }: Props) => {
   const dispatch = useDispatch();
 
-  const socket = io(url);
+  const socket = io(url, {
+    transports: ['websocket']
+  });
 
   useEffect(() => {
     socket.on('connect', () => {

@@ -7,7 +7,10 @@ interface IndicatorLightProps {
   colorFlash: boolean;
 }
 
-const IndicatorLight = styled(Box)<IndicatorLightProps>(
+const IndicatorLight = styled(Box, {
+  shouldForwardProp: (prop) =>
+    prop !== 'isError' && prop !== 'colorFlash' && prop !== 'size'
+})<IndicatorLightProps>(
   ({
     isError,
     colorFlash,

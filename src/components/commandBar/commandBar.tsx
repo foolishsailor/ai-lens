@@ -1,5 +1,5 @@
 // ButtonBar.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AppBar,
   Box,
@@ -15,13 +15,16 @@ import {
   Stop as StopIcon,
   SwapVert as SwapVertIcon
 } from '@mui/icons-material';
+import SyncIcon from '@mui/icons-material/Sync';
 import IndicatorLight from '../indicatorLight';
 import { RootState } from '@/store';
 import { useSelector, shallowEqual } from 'react-redux';
+import { useSocket } from '@/services/socket/socket';
 
 type LayoutChangeMenu = 'none' | 'show-connections' | 'fill-space';
 
 const ButtonBar: React.FC = () => {
+  const socket = useSocket();
   const { isConnected } = useSelector(
     (state: RootState) => ({
       isConnected: state.application.isConnected
@@ -29,10 +32,19 @@ const ButtonBar: React.FC = () => {
     shallowEqual
   );
 
+  const [isSyncing, setIsSyncing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [layoutChange, setLayoutChange] = useState<LayoutChangeMenu>('none');
 
+  const handleSync = () => {
+    if (socket) {
+      if (!isConnected) {
+        setIsSyncing(true);
+        socket.connect();
+      }
+    }
+  };
   const handleClickPlayStop = () => {
     setIsPlaying(!isPlaying);
   };
@@ -45,6 +57,12 @@ const ButtonBar: React.FC = () => {
     setLayoutChange(option);
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if (isConnected) {
+      setIsSyncing(false);
+    }
+  }, [isConnected]);
 
   const CommandBarSections = styled(Box)`
     display: flex;
@@ -76,6 +94,29 @@ const ButtonBar: React.FC = () => {
           </Tooltip>
         </CommandBarSections>
         <CommandBarSections>
+          <Button
+            disabled={isConnected}
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={handleSync}
+            sx={{
+              mr: 1,
+              '& svg': {
+                animation: isSyncing ? 'spin 1s linear infinite' : 'none'
+              },
+              '@keyframes spin': {
+                from: {
+                  transform: 'rotate(0deg)'
+                },
+                to: {
+                  transform: 'rotate(360deg)'
+                }
+              }
+            }}
+          >
+            <SyncIcon />
+          </Button>
           <Button
             size="small"
             variant="contained"
