@@ -1,15 +1,16 @@
-import { ReactNode } from 'react';
-import { Grid, useTheme } from '@mui/material';
+import { ReactNode, memo } from 'react';
+import { Grid } from '@mui/material';
 
 export interface ButtonBarContainerProps {
   children: ReactNode;
 }
 
-export const ButtonBarContainer = ({ children }: ButtonBarContainerProps) => {
-  const theme = useTheme();
+const ButtonBarContainer = ({ children }: ButtonBarContainerProps) => {
   return (
     <Grid container item sx={{ alignSelf: 'flex-end' }}>
       {children}
     </Grid>
   );
 };
+
+export default memo(ButtonBarContainer);

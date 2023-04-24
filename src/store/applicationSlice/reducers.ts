@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { ApplicationState } from './state';
+import { AgentsLayout, ApplicationState } from './state';
 import { AgentContainer } from '../../types/agent';
 import { Message } from '../../types/message';
 
@@ -33,10 +33,12 @@ export const reducers = {
 
   addMessages(state: ApplicationState, action: PayloadAction<Message>) {
     state.messages = [action.payload, ...state.messages];
-  }
+  },
 
-  // addMessages(state: ApplicationState, action: PayloadAction<Message>) {
-  //   const messages = [...state.messages, action.payload];
-  //   state.messages = messages.slice(-100);
-  // }
+  changeAgentsLayout(
+    state: ApplicationState,
+    action: PayloadAction<AgentsLayout>
+  ) {
+    state.agentsLayout = action.payload;
+  }
 };

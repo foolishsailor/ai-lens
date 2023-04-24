@@ -1,9 +1,9 @@
 // ButtonBar.tsx
-import React, { useEffect, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import {
   AppBar,
-  Box,
   Button,
+  Grid,
   Menu,
   MenuItem,
   styled,
@@ -12,30 +12,33 @@ import {
 } from '@mui/material';
 import {
   PlayArrow as PlayArrowIcon,
-  Stop as StopIcon,
-  SwapVert as SwapVertIcon
+  Stop as StopIcon
 } from '@mui/icons-material';
 import SyncIcon from '@mui/icons-material/Sync';
 import IndicatorLight from '../indicatorLight';
 import { RootState } from '@/store';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSocket } from '@/services/socket/socket';
+import {
+  useCommandActions,
+  CommandActions
+} from '@/services/socket/useCommandActions';
+import { changeAgentsLayout } from '@/store/applicationSlice';
 
 type LayoutChangeMenu = 'none' | 'show-connections' | 'fill-space';
 
-const ButtonBar: React.FC = () => {
+const CommandBar: React.FC = () => {
+  const dispatch = useDispatch();
   const socket = useSocket();
-  const { isConnected } = useSelector(
-    (state: RootState) => ({
-      isConnected: state.application.isConnected
-    }),
-    shallowEqual
+  const { executeCommand } = useCommandActions();
+
+  const isConnected = useSelector(
+    (state: RootState) => state.application.isConnected
   );
 
   const [isSyncing, setIsSyncing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [layoutChange, setLayoutChange] = useState<LayoutChangeMenu>('none');
 
   const handleSync = () => {
     if (socket) {
@@ -45,8 +48,14 @@ const ButtonBar: React.FC = () => {
       }
     }
   };
-  const handleClickPlayStop = () => {
-    setIsPlaying(!isPlaying);
+
+  const handleClickPlayStop = async () => {
+    try {
+      const response = await executeCommand(CommandActions.Stop);
+      console.log('Agent added:', response);
+    } catch (error) {
+      console.error('Error adding agent:', error);
+    }
   };
 
   const handleLayoutChangeClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -54,7 +63,17 @@ const ButtonBar: React.FC = () => {
   };
 
   const handleLayoutChangeMenuClose = (option: LayoutChangeMenu) => {
-    setLayoutChange(option);
+    switch (option) {
+      case 'show-connections':
+        dispatch(changeAgentsLayout({ gap: 100, padding: 40 }));
+        break;
+      case 'fill-space':
+        dispatch(changeAgentsLayout({ gap: 0, padding: 0 }));
+        break;
+      default:
+        dispatch(changeAgentsLayout({ gap: 0, padding: 0 }));
+    }
+
     setAnchorEl(null);
   };
 
@@ -64,7 +83,7 @@ const ButtonBar: React.FC = () => {
     }
   }, [isConnected]);
 
-  const CommandBarSections = styled(Box)`
+  const CommandBarSections = styled(Grid)`
     display: flex;
     align-items: center;
   `;
@@ -90,6 +109,7 @@ const ButtonBar: React.FC = () => {
             <IndicatorLight
               isError={!isConnected}
               colorFlash={true}
+              size={20}
             ></IndicatorLight>
           </Tooltip>
         </CommandBarSections>
@@ -126,18 +146,21 @@ const ButtonBar: React.FC = () => {
           >
             {isPlaying ? <StopIcon /> : <PlayArrowIcon />}
           </Button>
+        </CommandBarSections>
+        <Grid sx={{ display: 'flex', alignItems: 'center' }}>
           <Button
+            id="layout-change-button"
             size="small"
-            variant="contained"
             aria-controls="layout-change-menu"
             aria-haspopup="true"
             onClick={handleLayoutChangeClick}
             sx={{ mr: 1 }}
           >
-            <SwapVertIcon />
+            Layout
           </Button>
           <Menu
             id="layout-change-menu"
+            aria-labelledby="layout-change-button"
             color="primary"
             anchorEl={anchorEl}
             keepMounted
@@ -160,7 +183,7 @@ const ButtonBar: React.FC = () => {
               Fill Space
             </MenuItem>
           </Menu>
-        </CommandBarSections>
+        </Grid>
         <CommandBarSections sx={{ flex: 1 }}></CommandBarSections>
         <CommandBarSections sx={{ justifySelf: 'flex-end' }}>
           Token Count
@@ -170,4 +193,4 @@ const ButtonBar: React.FC = () => {
   );
 };
 
-export default ButtonBar;
+export default memo(CommandBar);

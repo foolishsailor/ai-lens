@@ -1,4 +1,4 @@
-import { ReactNode, SyntheticEvent, useState } from 'react';
+import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 
 import { ResizableBox, ResizeCallbackData } from 'react-resizable';
@@ -19,13 +19,15 @@ const DragAndResizeContainer = ({
   resizeHandler,
   children
 }: Props) => {
-  const [position, setPosition] = useState(initialPosition);
+  const [calculatedPosition, setCalculatedPosition] = useState(initialPosition);
+  const [draggablePosition, setDraggablePosition] = useState({ x: 0, y: 0 });
   const [size, setSize] = useState(initialSize);
 
   const handleDrag: DraggableEventHandler = (event, data) => {
     const { x, y } = data;
     const newPosition = { x: x + initialPosition.x, y: y + initialPosition.y };
-    setPosition(newPosition);
+    setCalculatedPosition(newPosition);
+    setDraggablePosition({ x: data.x, y: data.y });
     if (dragHandler) dragHandler(newPosition);
   };
 
@@ -39,11 +41,20 @@ const DragAndResizeContainer = ({
     }
   };
 
+  useEffect(() => {
+    if (dragHandler) dragHandler(initialPosition);
+    if (resizeHandler) resizeHandler(initialSize);
+    setSize(initialSize);
+    setCalculatedPosition(initialPosition);
+    setDraggablePosition({ x: 0, y: 0 });
+  }, [initialSize, initialPosition]);
+
   return (
     <Draggable
       cancel=".react-resizable-handle"
       bounds="parent"
       onDrag={handleDrag}
+      position={draggablePosition}
     >
       <ResizableBox
         width={size.width}

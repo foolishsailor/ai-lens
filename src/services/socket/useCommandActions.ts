@@ -2,10 +2,10 @@
 
   USAGE
 
-  import { useExecuteCommand, CommandActions } from './useExecuteCommand';
+  import { useCommandActions, CommandActions } from './useExecuteCommand';
 
   function AddAgentForm() {
-    const { loading, error, data, executeCommand } = useExecuteCommand();
+    const { loading, error, data, executeCommand } = useCommandActions();
 
     const [name, setName] = useState('');
     const [type, setType] = useState('');
@@ -88,7 +88,7 @@ function isValidCommandAction(action: string): action is CommandActions {
   return Object.values(CommandActions).includes(action as CommandActions);
 }
 
-export const useExecuteCommand = <T extends CommandActions>() => {
+export const useCommandActions = <T extends CommandActions>() => {
   const socket = useSocket();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -117,7 +117,7 @@ export const useExecuteCommand = <T extends CommandActions>() => {
 
       socket.emit(
         'message',
-        { type: 'Command', content: messageWithType },
+        { type: 'command', content: messageWithType },
         (response: any) => {
           setLoading(false);
 

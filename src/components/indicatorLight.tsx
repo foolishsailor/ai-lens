@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { styled, Theme } from '@mui/material/styles';
 
 interface IndicatorLightProps {
-  size?: string;
+  size?: number;
   isError: boolean;
   colorFlash: boolean;
 }

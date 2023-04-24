@@ -1,34 +1,57 @@
+import { RootState } from '@/store';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Agent from './agent';
 
 type Props = {
   agents: string[];
   parentSize: { width: number; height: number };
-  gap: number;
-  padding: number;
 };
 
-const AgentsPlacement = ({ agents, parentSize, gap, padding }: Props) => {
-  const numItems = agents.length;
-  const ratio = parentSize.height / parentSize.width;
-  const numCols = Math.ceil(Math.sqrt(numItems / ratio));
-  const numRows = Math.ceil(numItems / numCols);
-  const divWidth =
-    (parentSize.width - gap * (numCols - 1) - padding * 2) / numCols;
-  const divHeight =
-    (parentSize.height - gap * (numRows - 1) - padding * 2) / numRows;
+type AgentState = {
+  id: string;
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+};
 
-  const newAgentsState = agents.map((agent, index) => {
-    const row = Math.floor(index / numCols);
-    const col = index % numCols;
-    const initialPosition = {
-      y: row * (divHeight + gap) + padding,
-      x: col * (divWidth + gap) + padding
-    };
+const AgentsPlacement = ({ agents, parentSize }: Props) => {
+  const agentsLayout = useSelector(
+    (state: RootState) => state.application.agentsLayout
+  );
 
-    const size = { width: divWidth, height: divHeight };
+  const [newAgentsState, setNewAgentsState] = useState<AgentState[]>([]);
 
-    return { id: agent, position: initialPosition, size };
-  });
+  useEffect(() => {
+    const numItems = agents.length;
+    const ratio = parentSize.height / parentSize.width;
+    const numCols = Math.ceil(Math.sqrt(numItems / ratio));
+    const numRows = Math.ceil(numItems / numCols);
+    const divWidth =
+      (parentSize.width -
+        agentsLayout.gap * (numCols - 1) -
+        agentsLayout.padding * 2) /
+      numCols;
+    const divHeight =
+      (parentSize.height -
+        agentsLayout.gap * (numRows - 1) -
+        agentsLayout.padding * 2) /
+      numRows;
+
+    const newAgentsState: AgentState[] = agents.map((agent, index) => {
+      const row = Math.floor(index / numCols);
+      const col = index % numCols;
+      const initialPosition = {
+        y: row * (divHeight + agentsLayout.gap) + agentsLayout.padding,
+        x: col * (divWidth + agentsLayout.gap) + agentsLayout.padding
+      };
+
+      const size = { width: divWidth, height: divHeight };
+
+      return { id: agent, position: initialPosition, size };
+    });
+
+    setNewAgentsState(newAgentsState);
+  }, [agents, parentSize, agentsLayout]);
 
   const ComponentElements = newAgentsState.map((agent) => {
     return (

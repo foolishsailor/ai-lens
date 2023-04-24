@@ -15,7 +15,7 @@ import {
   AgentCardHeaderTitle
 } from '@/components/cards/agentCard';
 import CommsIndicator from '@/components/commsIndicator';
-import { ButtonBarContainer } from '@/layout/buttonBarContainer';
+import ButtonBarContainer from '@/layout/buttonBarContainer';
 import CommandBar from '@/components/commandBar';
 import ConnectionStatus from '@/components/noConnectionOrAgents';
 
@@ -36,8 +36,8 @@ const AgentsControl = () => {
     height: number;
   }>();
 
-  const gap = 100;
-  const padding = 40;
+  // const gap = 100;
+  // const padding = 40;
 
   useEffect(() => {
     if (parentRef.current) {
@@ -94,12 +94,7 @@ const AgentsControl = () => {
               <CommsLines message={messages[0]} agents={agents} />
             )}
             {parentSize && (
-              <AgentsPlacement
-                agents={activeAgents}
-                parentSize={parentSize}
-                gap={gap}
-                padding={padding}
-              />
+              <AgentsPlacement agents={activeAgents} parentSize={parentSize} />
             )}
           </AgentsContainer>
         )}

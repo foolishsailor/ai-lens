@@ -9,8 +9,13 @@ const slice = createSlice({
   reducers
 });
 
-export const { setActiveAgents, addUpdateAgents, addMessages, setIsConnected } =
-  slice.actions;
+export const {
+  setActiveAgents,
+  addUpdateAgents,
+  addMessages,
+  setIsConnected,
+  changeAgentsLayout
+} = slice.actions;
 
 const applicationSlice = slice.reducer;
 
