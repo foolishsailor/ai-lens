@@ -28,10 +28,12 @@ const SocketProvider = ({ children, url = 'http://localhost:4331' }: Props) => {
 
   useEffect(() => {
     socket.on('connect', () => {
+      console.log('socket connected');
       dispatch(setIsConnected(true));
     });
 
     socket.on('disconnect', () => {
+      console.log('socket disconnected');
       dispatch(setIsConnected(false));
       dispatch(setIsRunning(false));
     });

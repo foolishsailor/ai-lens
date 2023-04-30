@@ -15,7 +15,7 @@ export const reducers = {
     state.isConnected = action.payload;
   },
   setIsRunning(state: ApplicationState, action: PayloadAction<boolean>) {
-    state.isConnected = action.payload;
+    state.isRunning = action.payload;
   },
 
   addUpdateAgents(
