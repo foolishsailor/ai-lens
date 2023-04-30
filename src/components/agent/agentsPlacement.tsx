@@ -1,10 +1,11 @@
 import { RootState } from '@/store';
+import { AgentInterface } from '@/types/agent';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Agent from './agent';
 
 type Props = {
-  agents: string[];
+  agents: AgentInterface[];
   parentSize: { width: number; height: number };
 };
 
@@ -47,7 +48,7 @@ const AgentsPlacement = ({ agents, parentSize }: Props) => {
 
       const size = { width: divWidth, height: divHeight };
 
-      return { id: agent, position: initialPosition, size };
+      return { id: agent.id, position: initialPosition, size };
     });
 
     setNewAgentsState(newAgentsState);

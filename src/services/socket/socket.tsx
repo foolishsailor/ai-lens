@@ -1,7 +1,12 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import io, { Socket } from 'socket.io-client';
-import { setIsConnected } from '@/store/applicationSlice';
+import {
+  setIsConnected,
+  setIsRunning,
+  updateState
+} from '@/store/applicationSlice';
+import { Message, MessageType } from '@/types/message';
 
 interface SocketContextProps {
   socket: Socket;
@@ -28,6 +33,19 @@ const SocketProvider = ({ children, url = 'http://localhost:4331' }: Props) => {
 
     socket.on('disconnect', () => {
       dispatch(setIsConnected(false));
+      dispatch(setIsRunning(false));
+    });
+
+    socket.on('message', (message: Message) => {
+      console.log('socket container messages', message);
+
+      if (
+        message.type === MessageType.State &&
+        message.content.action === 'set' &&
+        message.content.properties
+      ) {
+        dispatch(updateState(message.content.properties));
+      }
     });
 
     return () => {

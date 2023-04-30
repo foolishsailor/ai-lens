@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSocket } from '@/services/socket/socket';
 import {
   useCommandActions,
-  CommandActions
+  CommandActionsEnum
 } from '@/services/socket/useCommandActions';
 import { changeAgentsLayout } from '@/store/applicationSlice';
 
@@ -56,7 +56,7 @@ const CommandBar: React.FC = () => {
   const handleClickPlayStop = async () => {
     try {
       const response = await executeCommand(
-        isRunning ? CommandActions.Stop : CommandActions.Start
+        isRunning ? CommandActionsEnum.Stop : CommandActionsEnum.Start
       );
       console.log('Agent added:', response);
     } catch (error) {

@@ -10,10 +10,11 @@ const slice = createSlice({
 });
 
 export const {
-  setActiveAgents,
+  updateState,
   addUpdateAgents,
   addMessages,
   setIsConnected,
+  setIsRunning,
   changeAgentsLayout
 } = slice.actions;
 

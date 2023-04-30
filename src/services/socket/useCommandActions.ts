@@ -44,7 +44,7 @@
 import { useState } from 'react';
 import { useSocket } from '@/services/socket/socket';
 
-export enum CommandActions {
+export enum CommandActionsEnum {
   Start = 'start',
   Stop = 'stop',
   AddAgent = 'addAgent',
@@ -56,39 +56,44 @@ export enum CommandActions {
 }
 
 export type CommandActionToMessage = {
-  [CommandActions.Start]: { action: CommandActions.Start; content: null };
-  [CommandActions.Stop]: { action: CommandActions.Stop; content: null };
-  [CommandActions.AddAgent]: {
-    action: CommandActions.AddAgent;
+  [CommandActionsEnum.Start]: {
+    action: CommandActionsEnum.Start;
+    content: null;
+  };
+  [CommandActionsEnum.Stop]: { action: CommandActionsEnum.Stop; content: null };
+  [CommandActionsEnum.AddAgent]: {
+    action: CommandActionsEnum.AddAgent;
     content: { id: string; name?: string; type?: string };
   };
-  [CommandActions.RemoveAgent]: {
-    action: CommandActions.RemoveAgent;
+  [CommandActionsEnum.RemoveAgent]: {
+    action: CommandActionsEnum.RemoveAgent;
     content: { id: string };
   };
-  [CommandActions.StopAgent]: {
-    action: CommandActions.StopAgent;
+  [CommandActionsEnum.StopAgent]: {
+    action: CommandActionsEnum.StopAgent;
     content: { id: string };
   };
-  [CommandActions.StartAgent]: {
-    action: CommandActions.StartAgent;
+  [CommandActionsEnum.StartAgent]: {
+    action: CommandActionsEnum.StartAgent;
     content: { id: string };
   };
-  [CommandActions.ChangeAgentType]: {
-    action: CommandActions.ChangeAgentType;
+  [CommandActionsEnum.ChangeAgentType]: {
+    action: CommandActionsEnum.ChangeAgentType;
     content: { id: string; type: string };
   };
-  [CommandActions.ChangeAgentName]: {
-    action: CommandActions.ChangeAgentName;
+  [CommandActionsEnum.ChangeAgentName]: {
+    action: CommandActionsEnum.ChangeAgentName;
     content: { id: string; name: string };
   };
 };
 
-function isValidCommandAction(action: string): action is CommandActions {
-  return Object.values(CommandActions).includes(action as CommandActions);
+function isValidCommandAction(action: string): action is CommandActionsEnum {
+  return Object.values(CommandActionsEnum).includes(
+    action as CommandActionsEnum
+  );
 }
 
-export const useCommandActions = <T extends CommandActions>() => {
+export const useCommandActions = <T extends CommandActionsEnum>() => {
   const socket = useSocket();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

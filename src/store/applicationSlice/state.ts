@@ -6,20 +6,24 @@ export interface AgentsLayout {
   padding: number;
 }
 export interface ApplicationState {
-  activeAgents: string[];
   messages: Message[];
   agents: AgentInterface[];
   isConnected: boolean;
   isRunning: boolean;
+  modelType: string;
+  openAIKey: string;
+  tokensUsed: number;
   agentsLayout: AgentsLayout;
 }
 
 export const initialState: ApplicationState = {
-  activeAgents: [],
   messages: [],
   agents: [],
   isConnected: false,
   isRunning: false,
+  modelType: '',
+  openAIKey: '',
+  tokensUsed: 0,
   agentsLayout: {
     gap: 0,
     padding: 0

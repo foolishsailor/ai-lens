@@ -1,6 +1,6 @@
 import {
   CommandActionToMessage,
-  CommandActions
+  CommandActionsEnum
 } from '@/services/socket/useCommandActions';
 
 interface SocketMessageState<T> {
@@ -20,5 +20,5 @@ interface SocketMessageMessage<T> {
 
 export type SocketMessage<T> =
   | SocketMessageState<T>
-  | SocketMessageCommand<CommandActionToMessage[CommandActions]>
+  | SocketMessageCommand<CommandActionToMessage[CommandActionsEnum]>
   | SocketMessageMessage<T>;

@@ -10,8 +10,8 @@ const ConnectionStatus: React.FC = () => {
   const isConnected = useSelector(
     (state: RootState) => state.application.isConnected
   );
-  const activeAgentsLength = useSelector(
-    (state: RootState) => state.application.activeAgents.length
+  const agentsLength = useSelector(
+    (state: RootState) => state.application.agents.length
   );
 
   let message: string;
@@ -20,7 +20,7 @@ const ConnectionStatus: React.FC = () => {
   if (!isConnected) {
     message = 'No connection to Chat Agent Server';
     icon = <NotConnectedIcon sx={{ fontSize: '10em', mb: 2 }} />;
-  } else if (activeAgentsLength === 0) {
+  } else if (agentsLength === 0) {
     message = 'Connected but no agents active';
     icon = <NoAgentsIcon sx={{ fontSize: '10em', mb: 2 }} />;
   } else {

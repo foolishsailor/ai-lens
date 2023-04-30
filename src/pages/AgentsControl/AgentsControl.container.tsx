@@ -6,7 +6,7 @@ import AgentsControl from './AgentsControl';
 
 import { useDispatch } from 'react-redux';
 
-import { addMessages, setActiveAgents } from '@/store/applicationSlice';
+import { addMessages } from '@/store/applicationSlice';
 
 const AgentsControlContainer = () => {
   const socket = useSocket();
@@ -14,7 +14,7 @@ const AgentsControlContainer = () => {
 
   const handleNewMessage = useCallback(
     (message: Message) => {
-      console.log('messages', message);
+      console.log('agent container messages', message);
       // dispatch(addMessages(message));
       // message.activeAgents && dispatch(setActiveAgents(message.activeAgents));
     },

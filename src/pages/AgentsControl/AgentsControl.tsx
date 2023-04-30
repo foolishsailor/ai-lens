@@ -20,10 +20,9 @@ import CommandBar from '@/components/commandBar';
 import ConnectionStatus from '@/components/noConnectionOrAgents';
 
 const AgentsControl = () => {
-  const { agents, activeAgents, messages, isConnected } = useSelector(
+  const { agents, messages, isConnected } = useSelector(
     (state: RootState) => ({
       agents: state.application.agents,
-      activeAgents: state.application.activeAgents,
       messages: state.application.messages,
       isConnected: state.application.isConnected
     }),
@@ -84,7 +83,7 @@ const AgentsControl = () => {
             <ControlInput />
           </Grid>
         </ControlContainer>
-        {!isConnected || activeAgents.length === 0 ? (
+        {!isConnected || agents.length === 0 ? (
           <AgentsContainer parentRef={parentRef}>
             <ConnectionStatus />
           </AgentsContainer>
@@ -94,7 +93,7 @@ const AgentsControl = () => {
               <CommsLines message={messages[0]} agents={agents} />
             )}
             {parentSize && (
-              <AgentsPlacement agents={activeAgents} parentSize={parentSize} />
+              <AgentsPlacement agents={agents} parentSize={parentSize} />
             )}
           </AgentsContainer>
         )}
