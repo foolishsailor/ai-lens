@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
 import { AgentsLayout, ApplicationState } from './state';
-import { AgentContainer } from '../../types/agent';
+import { AgentInterface } from '../../types/agent';
 import { Message } from '../../types/message';
 
 export const reducers = {
@@ -14,7 +14,7 @@ export const reducers = {
 
   addUpdateAgents(
     state: ApplicationState,
-    action: PayloadAction<Partial<AgentContainer[]>>
+    action: PayloadAction<Partial<AgentInterface[]>>
   ) {
     action.payload.forEach((newAgent) => {
       if (!newAgent?.id) return;

@@ -1,5 +1,5 @@
 import { Message } from '../../types/message';
-import { AgentContainer } from '../../types/agent';
+import { AgentInterface } from '../../types/agent';
 
 export interface AgentsLayout {
   gap: number;
@@ -8,8 +8,9 @@ export interface AgentsLayout {
 export interface ApplicationState {
   activeAgents: string[];
   messages: Message[];
-  agents: AgentContainer[];
+  agents: AgentInterface[];
   isConnected: boolean;
+  isRunning: boolean;
   agentsLayout: AgentsLayout;
 }
 
@@ -18,6 +19,7 @@ export const initialState: ApplicationState = {
   messages: [],
   agents: [],
   isConnected: false,
+  isRunning: false,
   agentsLayout: {
     gap: 0,
     padding: 0

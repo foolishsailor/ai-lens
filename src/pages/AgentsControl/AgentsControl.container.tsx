@@ -14,8 +14,9 @@ const AgentsControlContainer = () => {
 
   const handleNewMessage = useCallback(
     (message: Message) => {
-      dispatch(addMessages(message));
-      message.activeAgents && dispatch(setActiveAgents(message.activeAgents));
+      console.log('messages', message);
+      // dispatch(addMessages(message));
+      // message.activeAgents && dispatch(setActiveAgents(message.activeAgents));
     },
     [dispatch]
   );

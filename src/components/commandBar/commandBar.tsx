@@ -35,9 +35,13 @@ const CommandBar: React.FC = () => {
   const isConnected = useSelector(
     (state: RootState) => state.application.isConnected
   );
+  const isRunning = useSelector(
+    (state: RootState) => state.application.isRunning
+  );
 
+  console.log('isRunning', isRunning);
   const [isSyncing, setIsSyncing] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleSync = () => {
@@ -51,7 +55,9 @@ const CommandBar: React.FC = () => {
 
   const handleClickPlayStop = async () => {
     try {
-      const response = await executeCommand(CommandActions.Stop);
+      const response = await executeCommand(
+        isRunning ? CommandActions.Stop : CommandActions.Start
+      );
       console.log('Agent added:', response);
     } catch (error) {
       console.error('Error adding agent:', error);
@@ -144,7 +150,7 @@ const CommandBar: React.FC = () => {
             onClick={handleClickPlayStop}
             sx={{ mr: 1 }}
           >
-            {isPlaying ? <StopIcon /> : <PlayArrowIcon />}
+            {isRunning ? <StopIcon /> : <PlayArrowIcon />}
           </Button>
         </CommandBarSections>
         <Grid sx={{ display: 'flex', alignItems: 'center' }}>

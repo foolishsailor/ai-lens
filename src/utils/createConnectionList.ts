@@ -1,10 +1,10 @@
 import { Message } from '../types/message'; // Assuming types are in a separate file
-import { AgentContainer } from '../types/agent'; // Assuming types are in a separate file
+import { AgentInterface } from '../types/agent'; // Assuming types are in a separate file
 import { Connection } from '../types/draw';
 
 export const createConnectionList = (
   message: Message,
-  agents: AgentContainer[],
+  agents: AgentInterface[],
   steps: number
 ): Connection[] => {
   const positionsArray: Connection[] = [];

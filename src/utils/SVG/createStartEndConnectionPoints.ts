@@ -1,4 +1,4 @@
-import { AgentContainer } from '../../types/agent';
+import { AgentInterface } from '../../types/agent';
 import { Point } from '../../types/draw';
 
 /*
@@ -6,8 +6,8 @@ import { Point } from '../../types/draw';
   the line should start and end on
 */
 export const calculateStartAndEndPoints = (
-  startAgent: AgentContainer,
-  endAgent: AgentContainer,
+  startAgent: AgentInterface,
+  endAgent: AgentInterface,
   offset: number
 ): { startPoint: Point; endPoint: Point } => {
   if (
@@ -28,7 +28,7 @@ export const calculateStartAndEndPoints = (
   };
 
   const getMiddlePoint = (
-    agent: AgentContainer,
+    agent: AgentInterface,
     side: 'left' | 'right' | 'top' | 'bottom'
   ): Point => {
     if (!agent.position || !agent.size) return { x: 0, y: 0 };

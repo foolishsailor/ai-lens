@@ -117,7 +117,7 @@ export const useCommandActions = <T extends CommandActions>() => {
 
       socket.emit(
         'message',
-        { type: 'command', content: messageWithType },
+        { type: 'Command', content: messageWithType },
         (response: any) => {
           setLoading(false);
 
